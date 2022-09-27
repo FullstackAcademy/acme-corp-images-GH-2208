@@ -11,6 +11,12 @@ const Image = conn.define('image', {
   }
 });
 
+Image.addHook('beforeSave', (image)=> {
+  if(!image.data.startsWith('data')){
+    image.data = `data:image/png;base64,${image.data }`;
+  }
+});
+
 module.exports = {
   conn,
   Image

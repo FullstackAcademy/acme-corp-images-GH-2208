@@ -4,22 +4,27 @@ const root = createRoot(document.querySelector('#root'));
 import { Provider, connect } from 'react-redux';
 import store, { fetchImages } from './store';
 import { HashRouter as Router, Link, Route } from 'react-router-dom';
+import ImageUploader from './ImageUploader';
 
 const Images = connect(
   state => state
 )(({ images })=> {
   return (
-    <ul>
-      {
-        images.map( image => {
-          return (
-            <li key= { image.id }>
-              { image.name }
-            </li>
-          );
-        })
-      }
-    </ul>
+    <div>
+      <ul>
+        {
+          images.map( image => {
+            return (
+              <li key= { image.id }>
+                { image.name }
+                <img src={ image.data }/>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <ImageUploader />
+    </div>
   );
 });
 
@@ -46,7 +51,7 @@ const App = connect(
           <Link to='/'>Home</Link>
           <Link to='/images'>Images</Link>
         </nav>
-        <Route to='/images' component={ Images }/>
+        <Route path='/images' component={ Images }/>
       </main>
     );
   }
